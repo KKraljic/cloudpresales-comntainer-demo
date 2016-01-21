@@ -1,0 +1,18 @@
+FROM ubuntu:14.04
+
+RUN apt-get update
+RUN apt-get install software-properties-common -y
+RUN apt-get install build-essential -y
+RUN add-apt-repository ppa:webupd8team/java -y
+RUN apt-get update
+RUN echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections
+RUN apt-get install xorg openbox -y
+RUN apt-get install oracle-java8-installer -y
+RUN apt-get install oracle-java8-set-default
+RUN apt-get install libxext6 -y
+RUN apt-get install libxrender-dev -y
+RUN apt-get install libxtst6 -y
+RUN apt-get install libxi-dev -y
+RUN apt-get install xauth -y
+RUN apt-get update
+COPY /src/. /
