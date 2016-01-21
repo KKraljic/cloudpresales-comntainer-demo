@@ -102,7 +102,7 @@ public class DemoUI extends JFrame {
 		}
 		
 		private void getDataFromDb(){
-			Session dockerSession = new Session ("localhost",5984, "test", "test", false, false);
+			/*Session dockerSession = new Session ("localhost",5984, "test", "test", false, false);
 			List<String> availableDbs = dockerSession.getDatabaseNames();
 			String resultingEntriesFromDb = "";
 			
@@ -110,7 +110,7 @@ public class DemoUI extends JFrame {
 				resultingEntriesFromDb = resultingEntriesFromDb + "\n \t" + dbEntry ;
 			};
 			
-			returnLable.setText(resultingEntriesFromDb);
+			returnLable.setText(resultingEntriesFromDb);*/
 			getContentPane().add(returnLable);
 			getContentPane().repaint();
 			this.setVisible(true);
