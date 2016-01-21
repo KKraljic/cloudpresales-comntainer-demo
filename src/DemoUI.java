@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.*;
 
 import com.fourspaces.couchdb.*;
+import com.fourspaces.couchdb.util.*;
 
 @SuppressWarnings("serial")
 public class DemoUI extends JFrame {
