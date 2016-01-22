@@ -22,7 +22,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import com.fourspaces.couchdb.util.JSONUtils;
+import com.fourspaces.couchdb.util.*;
 import net.sf.json.*;
 
 import org.apache.commons.lang.StringUtils;

@@ -17,7 +17,7 @@
 package com.fourspaces.couchdb;
 
 import java.io.IOException;
-import com.fourspaces.couchdb.util.JSONUtils;
+import com.fourspaces.couchdb.util.*;
 import static com.fourspaces.couchdb.util.JSONUtils.urlEncodePath;
 import net.sf.json.*;
 
