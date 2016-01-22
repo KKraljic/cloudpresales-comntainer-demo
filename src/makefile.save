@@ -1,0 +1,11 @@
+FLAGS = -nowarn
+JC = javac -cp ".:/lib/*.:/lib/*.jar:.jar:"
+JCR = java -cp ".:/lib/*.jar"
+RM = rm
+
+.SUFFIXES: .java
+CLASSES = DemoUI.java
+DemoUI.class : DemoUI.java
+	$(JC) DemoUI.java
+	$(JCR) DemoUI
+	$(RM) *.class
