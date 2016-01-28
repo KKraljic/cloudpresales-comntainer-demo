@@ -17,6 +17,7 @@ RUN apt-get install xauth -y
 RUN apt-get update
 RUN export JAVA_HOME=/usr/java/jdk1.8.0
 RUN export PATH=${PATH}:${JAVA_HOME}/bin
-COPY pom.xml
+COPY pom.xml .
 COPY /src/. /src/
 RUN mvn build
+CMD
