@@ -22,3 +22,4 @@ COPY pom.xml .
 COPY /src/. /src/
 COPY makefile .
 RUN mvn package
+CMD ["cd target", "java -jar Container-Presales-Demo-1.0-SNAPSHOT.jar"]
