@@ -3,6 +3,7 @@ package HybridIT;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.List;
 
 import javax.swing.*;
@@ -12,6 +13,8 @@ import HybridIT.com.fourspaces.couchdb.util.*;
 
 @SuppressWarnings("serial")
 public class DemoUI extends JFrame {
+	
+		private static final String PRESENTER_KEY_NAME = "name";
 		private JLabel nameFieldLable;
 		private JLabel successFieldLable;
 		private JLabel retrieveAllEntriesLable;
@@ -94,8 +97,8 @@ public class DemoUI extends JFrame {
 		}
 		
 		private void insertDataIntoDb(String name){
-			Session dockerSession = new Session ("localhost",5984, "test", "test", false, false);
-			dockerSession.createDatabase("names");
+			Session dockerSession = new Session ("localhost",5984);
+			dockerSession.createDatabase("presenter");
 			
 			
 			
@@ -103,15 +106,39 @@ public class DemoUI extends JFrame {
 		}
 		
 		private void getDataFromDb(){
-			Session dockerSession = new Session ("localhost",5984, "test", "test", false, false);
-			List<String> availableDbs = dockerSession.getDatabaseNames();
-			String resultingEntriesFromDb = "";
+			Session dockerSession;
+			Database presenterDb;
+			ViewResults presenterViewResults;
+			List<Document> presenterDocuments;
+			String id;
+			Document presenterEntries;
+			String returnSet = "\n";
 			
-			for(String dbEntry : availableDbs){
-				resultingEntriesFromDb = resultingEntriesFromDb + "\n \t" + dbEntry ;
-			};
 			
-			returnLable.setText(resultingEntriesFromDb);
+			dockerSession= new Session ("localhost",5984);
+			presenterDb = dockerSession.getDatabase("presenter");
+			presenterViewResults = presenterDb.getAllDocuments();
+			presenterDocuments = presenterViewResults.getResults();
+			
+			returnLable.setText("The following entries are available in the database:");
+			
+			for(Document couchDocument : presenterDocuments){
+				id = couchDocument.getJSONObject().getString("id");
+			
+				try{
+					presenterEntries = presenterDb.getDocument(id);
+					
+					if(presenterEntries.containsKey(PRESENTER_KEY_NAME)){
+						returnSet = "\n NAME: \t"+presenterEntries.getDouble(PRESENTER_KEY_NAME) ;
+					}
+					
+				}			
+				catch(IOException e){
+					System.out.println("No conncetion possible. Whyever.");
+				}
+			}
+			
+			
 			getContentPane().add(returnLable);
 			getContentPane().repaint();
 			this.setVisible(true);
