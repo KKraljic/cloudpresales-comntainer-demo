@@ -15,4 +15,12 @@ RUN apt-get install libxtst6 -y
 RUN apt-get install libxi-dev -y
 RUN apt-get install xauth -y
 RUN apt-get update
-COPY /src/. /
+RUN apt-get install maven -y
+RUN export JAVA_HOME=/usr/java/jdk1.8.0
+RUN export PATH=${PATH}:${JAVA_HOME}/bin
+COPY pom.xml .
+COPY /src/. /src/
+COPY makefile .
+RUN mvn package
+CMD .exit
+/target/
