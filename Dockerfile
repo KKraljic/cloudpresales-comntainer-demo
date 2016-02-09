@@ -22,5 +22,4 @@ COPY pom.xml .
 COPY /src/. /src/
 COPY makefile .
 RUN mvn package
-CMD .exit
-/target/
+CMD java -jar ./target/Cloudpresales-Container-Demo-1.0.jar
