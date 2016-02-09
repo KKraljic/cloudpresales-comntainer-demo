@@ -22,4 +22,5 @@ COPY pom.xml .
 COPY /src/. /src/
 COPY makefile .
 RUN mvn package
-CMD ./target/
+CMD .exit
+/target/

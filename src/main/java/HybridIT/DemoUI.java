@@ -4,7 +4,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.*;
 
@@ -15,15 +17,17 @@ import HybridIT.com.fourspaces.couchdb.util.*;
 public class DemoUI extends JFrame {
 	
 		private static final String PRESENTER_KEY_NAME = "name";
+		static Session dockerSession;
+		static Database presenterDb;
+
 		private JLabel nameFieldLable;
 		private JLabel successFieldLable;
 		private JLabel retrieveAllEntriesLable;
 		private JLabel returnLable;
-		
 		private JTextField nameField;
-		
 		private JButton submitButton;
 		private JButton retrieveButton;
+		private JScrollPane rightScrollbar;
 		
 		public static void main(String[] args) {
 			new DemoUI("Simple Demo Application");
@@ -35,7 +39,7 @@ public class DemoUI extends JFrame {
 			this.setSize(500, 500);
 			this.setResizable(false);
 			
-			GridLayout layout = new GridLayout(8, 1);
+			GridLayout layout = new GridLayout(7, 1);
 			this.setLayout(layout);
 			
 			nameFieldLable = new JLabel("Your name:");
@@ -43,14 +47,11 @@ public class DemoUI extends JFrame {
 			submitButton = new JButton("Submit to database!");
 			successFieldLable = new JLabel("");
 			
-			
-			
 			submitButton.setName("submit");
 			submitButton.addActionListener(new ActionListener(){
 				
 				public void actionPerformed(ActionEvent e) {
 					fillUI(1);
-					insertDataIntoDb(nameField.getText());
 				}
 			});
 			
@@ -59,88 +60,106 @@ public class DemoUI extends JFrame {
 			retrieveButton.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent e){
 					fillUI(2);
-					getDataFromDb();
 				}
 				
 			});
-			returnLable = new JLabel("");
+			returnLable = new JLabel();
+			rightScrollbar = new JScrollPane(returnLable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 			fillUI(0);
-		}
+			
+}
 		
 		private void fillUI(int mode){
 			
 			switch(mode){
-			case 1: successFieldLable.setText("Succesfully submitted!");
+			case 1: setDataInDb();
 					returnLable.setText("");
-					
 					break;
 			case 2: successFieldLable.setText(""); 
-					returnLable.setText("The information inside the DB is:");
-					getDataFromDb();
+					getDataFromDb(); 
 					break;
 			default:successFieldLable.setText(""); 
-					returnLable.setText("");
 					break;
 			}
-			
-			getContentPane().add(nameFieldLable);
-			getContentPane().add(nameField);
-			getContentPane().add(submitButton);
-			getContentPane().add(successFieldLable);
-			getContentPane().add(retrieveAllEntriesLable);
-			getContentPane().add(retrieveButton);
-			getContentPane().add(returnLable);
-			
-			getContentPane().repaint();
-			this.setVisible(true);
-			
+				getContentPane().add(nameFieldLable);
+				getContentPane().add(nameField);
+				getContentPane().add(submitButton);
+				getContentPane().add(successFieldLable);
+				getContentPane().add(retrieveAllEntriesLable);
+				getContentPane().add(retrieveButton);
+				getContentPane().add(rightScrollbar);
+				getContentPane().repaint();
+				this.setVisible(true);
 		}
 		
-		private void insertDataIntoDb(String name){
-			Session dockerSession = new Session ("localhost",5984);
-			dockerSession.createDatabase("presenter");
+		private static void openDbSession(){
 			
+			dockerSession= new Session ("localhost",5984);
+			presenterDb = dockerSession.getDatabase("presenter");
 			
+		}
+		private void setDataInDb(){			
+			Document newPresenterEntry;
+			Map<String, String> propertiesOfPresenter;
 			
+			openDbSession();
 			
+			newPresenterEntry = new Document();
+			propertiesOfPresenter = new HashMap<String, String>();
+			propertiesOfPresenter.put(PRESENTER_KEY_NAME, nameField.getText());
+			
+			newPresenterEntry.putAll(propertiesOfPresenter);
+			try {
+				presenterDb.saveDocument(newPresenterEntry);
+			} catch (IOException e) {
+				System.out.println("Saving of document went wrong. Check everything.");
+			}
+			successFieldLable.setText("Succesfully submitted!");
 		}
 		
 		private void getDataFromDb(){
-			Session dockerSession;
-			Database presenterDb;
+
 			ViewResults presenterViewResults;
 			List<Document> presenterDocuments;
 			String id;
 			Document presenterEntries;
-			String returnSet = "\n";
+			String returnSet;
 			
+			openDbSession();
 			
-			dockerSession= new Session ("localhost",5984);
-			presenterDb = dockerSession.getDatabase("presenter");
+			getContentPane().remove(returnLable);
+			getContentPane().remove(rightScrollbar);
+			
+			returnSet = "<html><body>The following entries are available in the database:<br>";
+			
 			presenterViewResults = presenterDb.getAllDocuments();
 			presenterDocuments = presenterViewResults.getResults();
 			
-			returnLable.setText("The following entries are available in the database:");
-			
 			for(Document couchDocument : presenterDocuments){
 				id = couchDocument.getJSONObject().getString("id");
+				returnSet = returnSet + "<br> Pres. no.:&#09"+ " " + id; //&#09 is a tab
+			
 			
 				try{
 					presenterEntries = presenterDb.getDocument(id);
 					
 					if(presenterEntries.containsKey(PRESENTER_KEY_NAME)){
-						returnSet = "\n NAME: \t"+presenterEntries.getDouble(PRESENTER_KEY_NAME) ;
+						returnSet = returnSet +  "<br> NAME:&#09"+ " " + presenterEntries.getString(PRESENTER_KEY_NAME) ;
 					}
 					
 				}			
 				catch(IOException e){
-					System.out.println("No conncetion possible. Whyever.");
+					System.out.println("No connection possible. Whyever.");
 				}
+				returnSet = returnSet + "<br>";
 			}
 			
-			
+			returnSet = returnSet + "</body></html>";
 			getContentPane().add(returnLable);
+			returnLable.setText(returnSet);	
 			getContentPane().repaint();
+			rightScrollbar = new JScrollPane(returnLable, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			getContentPane().add(rightScrollbar);
 			this.setVisible(true);
 		}
 }
