@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-
+MAINTAINER Karlo Kraljic
 RUN apt-get update
 RUN apt-get install software-properties-common -y
 RUN apt-get install build-essential -y
