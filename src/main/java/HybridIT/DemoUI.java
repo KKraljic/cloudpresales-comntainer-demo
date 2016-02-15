@@ -94,7 +94,7 @@ public class DemoUI extends JFrame {
 		
 		private static void openDbSession(){
 			
-			dockerSession= new Session ("localhost",5984);
+			dockerSession= new Session ("172.17.0.1",5984);
 			presenterDb = dockerSession.getDatabase("presenter");
 			
 		}
