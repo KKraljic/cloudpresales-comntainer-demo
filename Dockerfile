@@ -1,5 +1,5 @@
 FROM ubuntu:14.04
-
+MAINTAINER Karlo Kraljic
 RUN apt-get update
 RUN apt-get install software-properties-common -y
 RUN apt-get install build-essential -y
@@ -22,5 +22,4 @@ COPY pom.xml .
 COPY /src/. /src/
 COPY makefile .
 RUN mvn package
-CMD .exit
-/target/
+CMD java -jar ./target/Cloudpresales-Container-Demo-1.0.jar

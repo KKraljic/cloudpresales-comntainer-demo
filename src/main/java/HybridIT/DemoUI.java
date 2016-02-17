@@ -93,9 +93,17 @@ public class DemoUI extends JFrame {
 		}
 		
 		private static void openDbSession(){
+			System.out.println("\n Trying to connect to DB:");
+			dockerSession= new Session ("127.0.0.1",5984);
+			System.out.println("\t Success. \n");
+			System.out.println("Trying to catch the presenter DB:");
 			
-			dockerSession= new Session ("localhost",5984);
+			if(dockerSession.getDatabase("presenter") != null){
 			presenterDb = dockerSession.getDatabase("presenter");
+			System.out.println("\t Success. \n");
+			}else{
+				System.out.println("\t Failed. Reason: No 'presenter' DB available. \n");
+			}
 			
 		}
 		private void setDataInDb(){			
