@@ -93,15 +93,15 @@ public class DemoUI extends JFrame {
 		}
 		
 		private static void openDbSession(){
-			System.out.println("\n Trying to connect to DB:");
+			/*System.out.println("\n Trying to connect to DB:");
 			dockerSession= new Session ("127.0.0.1",5984);
 			if(dockerSession != null){	
 				System.out.println("\t Success. \n");
 				}
-			else{
+			else{*/
 				dockerSession = new Session ("172.17.0.2",5984);
 				System.out.println("\t Success. \n");
-			}
+			//}
 			
 			System.out.println("Trying to catch the presenter DB:");
 			
