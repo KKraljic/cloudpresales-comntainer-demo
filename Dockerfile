@@ -20,6 +20,5 @@ RUN export JAVA_HOME=/usr/java/jdk1.8.0
 RUN export PATH=${PATH}:${JAVA_HOME}/bin
 COPY pom.xml .
 COPY /src/. /src/
-COPY makefile .
 RUN mvn package
 CMD java -jar ./target/Cloudpresales-Container-Demo-1.0.jar
