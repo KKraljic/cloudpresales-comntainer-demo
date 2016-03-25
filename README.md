@@ -1,7 +1,13 @@
 #Motivation
 This little application is for showing the possibility to deploy "old school" applications inside container native environments.
 
-It shows how to transform old school fashioned applications in a fast and efficient manner to fulfill cloud native paradigms.
+It shows how to transform old fashioned applications in a fast and efficient manner to cloud native paradigm based applications.
+
+##Prerequisites
+
+* Ubuntu or other Linux OS instance
+* Running Docker engine
+* Internet connectivity
 
 ##Modules
 This project contains several mandatory files:
@@ -12,12 +18,15 @@ This project contains several mandatory files:
 * _src/main/java/HybridIT/com/fourspaces/[util]/*.java_ : Logic to communicate with the couchDB
 
 ##How to run this application
-The user has to create the image itself (I included the _--no-cache_ flag since I had several problems with my internet connectivity- the download stopped and the Docker engine used the broken packages from the cache... Annoying ;) ):
+The user has to create the image first (I included the _--no-cache_ flag since I had several problems with my internet connectivity- the download stopped and the Docker engine used the broken packages taht were cached... Annoying ;) ):
 
 _sudo docker build --no-cache –t java:ui ._
 
-After the build process finished, the user can run the couchDB and the UI automatically by running the shell script.
-Please have in mind that the container environment does not support stateful applications. If you want to save the entries of the DB, please checkout the couchDB & Docker container manuals (or write me a message, I'll give you some hints :) ).
+After the build process finishes, the user can run the couchDB and the UI automatically and in the right order by running the included shell script:
+
+_sudo ./run.sh_
+
+Please have in mind that the container environment is not supporting stateful applications. If you want to save your entries of the DB, please checkout the couchDB & Docker container manuals (or write me a message, I'll give you some hints :) ).
 
 ##Functionality
 
