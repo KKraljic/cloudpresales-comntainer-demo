@@ -1,3 +1,20 @@
+/* Created on : 19-02-2016
+ * Author     : Karlo Kraljic
+ *
+ *-----------------------------------------------------------------------------
+ * Revision History (Release 1.1.0.0)
+ *-----------------------------------------------------------------------------
+ * VERSION     AUTHOR/      DESCRIPTION OF CHANGE
+ * OLD/NEW     DATE                RFC NO
+ *-----------------------------------------------------------------------------
+ * --/1.0  | Karlo Kraljic | Initial Create.
+ *         | 19-02-2016    |
+ *---------|---------------|---------------------------------------------------
+ * 1.0/1.1 | Karlo Kraljic | Code improvement. No changes in terms of functionality.
+ *         | 25-03-2016    | 
+ *---------|---------------|---------------------------------------------------
+ */
+
 package HybridIT;
 
 import java.awt.GridLayout;
@@ -11,7 +28,6 @@ import java.util.Map;
 import javax.swing.*;
 
 import HybridIT.com.fourspaces.couchdb.*;
-import HybridIT.com.fourspaces.couchdb.util.*;
 
 @SuppressWarnings("serial")
 public class DemoUI extends JFrame {
@@ -46,7 +62,6 @@ public class DemoUI extends JFrame {
 			nameField = new JTextField();
 			submitButton = new JButton("Submit to database!");
 			successFieldLable = new JLabel("");
-			
 			submitButton.setName("submit");
 			submitButton.addActionListener(new ActionListener(){
 				
@@ -93,23 +108,17 @@ public class DemoUI extends JFrame {
 		}
 		
 		private static void openDbSession(){
-			/*System.out.println("\n Trying to connect to DB:");
-			dockerSession= new Session ("127.0.0.1",5984);
-			if(dockerSession != null){	
-				System.out.println("\t Success. \n");
-				}
-			else{*/
-				dockerSession = new Session ("172.17.0.2",5984);
-				System.out.println("\t Success. \n");
-			//}
+			System.out.println("\n Trying to connect to the DB...");
+			dockerSession = new Session ("172.17.0.2",5984);
+			System.out.println("\n Success.");			
 			
-			System.out.println("Trying to catch the presenter DB:");
+			System.out.println("\n Trying to catch the presenter DB:");
 			
 			if(dockerSession.getDatabase("presenter") != null){
 			presenterDb = dockerSession.getDatabase("presenter");
-			System.out.println("\t Success. \n");
+			System.out.println("\n Success.");
 			}else{
-				System.out.println("\t Failed. Reason: No 'presenter' DB available. \n");
+				System.out.println("\n Failed. Reason: No 'presenter' DB available.");
 			}
 			
 		}
@@ -127,9 +136,9 @@ public class DemoUI extends JFrame {
 			try {
 				presenterDb.saveDocument(newPresenterEntry);
 			} catch (IOException e) {
-				System.out.println("Saving of document went wrong. Check everything.");
+				System.out.println("\n Saving of document went wrong. Check everything.");
 			}
-			successFieldLable.setText("Succesfully submitted!");
+			successFieldLable.setText("\n Succesfully submitted!");
 		}
 		
 		private void getDataFromDb(){
