@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>HybridIT</groupId>
-  <artifactId>Cloudpresales-Container-Demo</artifactId>
+  <artifactId>Container_JavaUI_couchDB_app</artifactId>
   <version>1.0</version>
   <packaging>jar</packaging>
 
-  <name>Container-Presales-Demo</name>
+  <name>Container_JavaUI_couchDB_app</name>
   <url>http://maven.apache.org</url>
 
   <properties>
