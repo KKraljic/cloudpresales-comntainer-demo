@@ -36,3 +36,7 @@ The user can retrieve the information of the DB- but cannot delete the entries o
 
 ##Closing words
 If you find a bug, or something else, please contact me. If you want to get some background information, feel free to contact me. If you have some feedback, contact me... If you have something else, contact me (which surprise).
+
+Best regards,
+
+Karlo Kraljic
