@@ -6,13 +6,13 @@ It shows how to transform old school fashioned applications in a fast and effici
 ##Modules
 This project contains several mandatory files:
 
-* pom.xml : Containing all dependencies for the Java logic
-* Dockerfile : Containing all information for the container image
-* src/main/java/HybridIT/DemoUI.java : All logic to create a running UI
-* src/main/java/HybridIT/com/fourspaces/[util]/*.java : Logic to communicate with the couchDB
+* _pom.xml_ : Containing all dependencies for the Java logic
+* _Dockerfile_ : Containing all information for the container image
+* _src/main/java/HybridIT/DemoUI.java_ : All logic to create a running UI
+* _src/main/java/HybridIT/com/fourspaces/[util]/*.java_ : Logic to communicate with the couchDB
 
 ##How to run this application
-The user has to create the image itself (I included the --no-cache flag since I had several problems with my internet connectivity- the download stopped and the Docker engine used the broken packages from the cache... Annoying ;) ):
+The user has to create the image itself (I included the _--no-cache_ flag since I had several problems with my internet connectivity- the download stopped and the Docker engine used the broken packages from the cache... Annoying ;) ):
 
 _sudo docker build --no-cache –t java:ui ._
 
