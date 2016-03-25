@@ -14,7 +14,7 @@ This project contains several mandatory files:
 ##How to run this application
 The user has to create the image itself (I included the --no-cache flag since I had several problems with my internet connectivity- the download stopped and the Docker engine used the broken packages from the cache... Annoying ;) ):
 
-_ sudo docker build --no-cache –t java:ui . _
+_sudo docker build --no-cache –t java:ui ._
 
 After the build process finished, the user can run the couchDB and the UI automatically by running the shell script.
 Please have in mind that the container environment does not support stateful applications. If you want to save the entries of the DB, please checkout the couchDB & Docker container manuals (or write me a message, I'll give you some hints :) ).
